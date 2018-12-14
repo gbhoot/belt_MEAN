@@ -1,6 +1,13 @@
 var express = require('express'),
     path = require('path'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    session = require('express-session')({
+        secret: "ssssssssssssssshhhh",
+        autoSave: true,
+        resave: false,
+        saveUninitialized: true
+    }),
+    flash = require('express-flash');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));

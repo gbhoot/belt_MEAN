@@ -1,15 +1,16 @@
-var Author = require('../models/author.js');
+var Movie = require('../models/movie.js'),
+    Review = require('../models/review.js');
 
 module.exports = {
     getAll: function(req, res) {
-        Author.find({}, function(error, authors) {
+        Movie.find({}, function(error, movies) {
             if (error) {
                 console.log("There was an issue: ", error);
                 res.json(error);
             } else {
                 let response = {
                     message: "Success",
-                    authors: authors
+                    movies: movies
                 };
                 res.json(response);
             };
@@ -17,15 +18,15 @@ module.exports = {
     },
 
     getOne: function(req, res) {
-        let aid = req.params.id;
-        Author.findOne({_id: aid}, function(error, author) {
-            if (error || author.length == 0) {
+        let mid = req.params.id;
+        Movie.findOne({_id: mid}, function(error, movie) {
+            if (error || movie.length == 0) {
                 console.log("There was an issue: ", error);
                 res.json(error);
             } else {
                 let response = {
                     message: "Success",
-                    author: author
+                    movie: movie
                 };
                 res.json(response);
             };
@@ -33,34 +34,45 @@ module.exports = {
     },
 
     create: function(req, res) {
-        let inc_author = req.body;
-        let author = new Author(inc_author);
-        author.save(function(error, new_author) {
+        let inc_movie = req.body['movie'];
+        let inc_review = req.body['review'];
+        let review = new Review(inc_review);
+        review.save(function(error, new_review) {
             if (error) {
                 console.log("There was an issue: ", error);
                 res.json(error);
-            } else {
-                let response = {
-                    message: "Success",
-                    author: author
-                };
-                res.json(response);
-            };
+            }
+            else {
+                inc_movie['reviews'] = review._id
+                let movie = new Movie(inc_movie);
+                movie.save(function(error, new_movie) {
+                    if (error) {
+                        console.log("There was an issue: ", error);
+                        res.json(error);
+                    } else {
+                        let response = {
+                            message: "Success",
+                            movie: movie
+                        };
+                        res.json(response);
+                    };
+                });
+            }
         });
     },
 
     update: function(req, res) {
-        let inc_author = req.body;
-        let aid = req.params.id;
+        let inc_movie = req.body;
+        let mid = req.params.id;
         let opts = { runValidators: true };
-        Author.updateOne({_id: aid}, inc_author, opts, function(error, author) {
+        Movie.updateOne({_id: mid}, inc_movie, opts, function(error, movie) {
             if (error) {
                 console.log("There was an issue: ", error);
                 res.json(error);
             } else {
                 let response = {
                     message: "Success",
-                    author: author
+                    movie: movie
                 };
                 res.json(response);
             }
@@ -68,7 +80,7 @@ module.exports = {
     },
 
     destroyAll: function(req, res) {
-        Author.deleteMany({}, function(error) {
+        Movie.deleteMany({}, function(error) {
             if (error) {
                 console.log("There was an issue: ", error);
                 res.json(error);
@@ -82,8 +94,8 @@ module.exports = {
     },
 
     destroyOne: function(req, res) {
-        let aid = req.params.id;
-        Author.deleteOne({_id: aid}, function(error) {
+        let mid = req.params.id;
+        Movie.deleteOne({_id: mid}, function(error) {
             if (error) {
                 console.log("There was an issue: ", error);
                 res.json(error);
