@@ -36,6 +36,7 @@ module.exports = {
     create: function(req, res) {
         let inc_movie = req.body['movie'];
         let inc_review = req.body['review'];
+        inc_review['rating'] = Number(inc_review['rating']);
         let review = new Review(inc_review);
         review.save(function(error, new_review) {
             if (error) {

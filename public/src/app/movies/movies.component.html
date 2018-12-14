@@ -1,3 +1,49 @@
-<p>
-  movies works!
-</p>
+<div class="row">
+    <div class="col text-left">
+        <h4>Movie List</h4>
+    </div>
+</div>
+
+<div class="row my-2">
+    <div class="col text-left">
+        <a [routerLink]="['new']"
+        class="btn btn-primary"
+        >Add a New Movie</a>
+    </div>
+</div>
+
+<div class="row my-4">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr class="text-center">
+                <th scope="col">No</th>
+                <th scope="col">Movie Title</th>
+                <th scope="col">Reviews</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let movie of movies, let i=index"
+            class="text-center">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.ratingAvg }} stars 
+                    ({{ movie.reviews.length }})</td>
+                <td>
+                    <div class="row">
+                        <div class="col text-center">
+                            <a [routerLink]="[movie._id]"
+                            class="btn btn-sm btn-secondary"
+                            >Read Reviews</a>
+                        </div>
+                        <div class="col text-center">
+                            <a [routerLink]="[movie._id, 'review']"
+                            class="btn btn-sm btn-success"
+                            >Write Review</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

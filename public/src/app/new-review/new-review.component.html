@@ -1,3 +1,63 @@
-<p>
-  new-review works!
-</p>
+<div class="row">
+    <div class="col text-left">
+        <h4>Add a Review for {{ movieTitle }}</h4>
+    </div>
+</div>
+
+<div class="row my-4">
+    <div class="container">
+        <form (submit)="createNewReviewForMovie($event)">
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <h5>Reviewer Name</h5>
+                </div>
+                <div class="col">
+                    <input type="text" name="reviewD.name"
+                    class="form-control"
+                    [(ngModel)]="reviewD.name"
+                    placeholder="Reviewer name">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <h5>Rating</h5>
+                </div>
+                <div class="col">
+                    <select name="reviewD.rating"
+                    class="form-control"
+                    [(ngModel)]="reviewD.rating">
+                        <option value="1" selected
+                        >1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <h5>Review</h5>
+                </div>
+                <div class="col">
+                    <textarea name="reviewD.review" rows="3"
+                    class="form-control"
+                    placeholder="Review content"
+                    [(ngModel)]="reviewD.review"
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col text-center">
+                    <a [routerLink]="['/movies']"
+                    class="btn btn-secondary"
+                    >Cancel</a>
+                </div>
+                <div class="col text-center">
+                    <button class="btn btn-success"
+                    type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

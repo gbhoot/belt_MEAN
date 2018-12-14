@@ -60,6 +60,7 @@ module.exports = {
     create: function(req, res) {
         let mid = req.params.id;
         let inc_review = req.body;
+        inc_review['rating'] = Number(inc_review['rating']);
         let review = new Review(inc_review);
         review.save(function(error, new_review) {
             if (error) {
@@ -85,6 +86,7 @@ module.exports = {
 
     createFirst: function(req, res) {
         let inc_review = req.body;
+        inc_review['rating'] = Number(inc_review['rating']);
         let review = new Review(inc_review);
         review.save(function(error, new_review) {
             if (error) {

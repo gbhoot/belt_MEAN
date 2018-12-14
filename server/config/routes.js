@@ -3,6 +3,10 @@ var path = require('path'),
     reviews = require('../controllers/reviews.js');
 
 module.exports = function(app) {
+    app.get('', function(req, res) {
+        res.redirect('/movies');
+    });
+
     // Get all the movies
     app.get('/db/v1/movies', function(req, res) {
         movies.getAll(req, res);
