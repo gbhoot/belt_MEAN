@@ -10,4 +10,5 @@ app.use(express.static(path.join(__dirname, './public/dist/public')));
 // Routes
 require('./server/config/routes.js')(app);
 
+// Port listening on
 app.listen(8000);
