@@ -85,25 +85,47 @@ module.exports = {
                 console.log("There was an issue: ", error);
                 res.json(error);
             } else {
-                let response = {
-                    message: "Success"
-                };
-                res.json(response);
+                Review.deleteMany({}, function(error) {
+                    if (error) {
+                        console.log("There was an issue: ", error);
+                        res.json(error);
+                    } else {
+                        let response = {
+                            message: "Success"
+                        };
+                        res.json(response);
+                    };
+                });
             };
         });
     },
 
     destroyOne: function(req, res) {
         let mid = req.params.id;
-        Movie.deleteOne({_id: mid}, function(error) {
+        Movie.findOne({_id: mid}, function(error, movie) {
             if (error) {
                 console.log("There was an issue: ", error);
                 res.json(error);
             } else {
-                let response = {
-                    message: "Success",
-                };
-                res.json(response);
+                let reviewsList = movie['reviews'];
+                Review.deleteMany({_id: {$in: reviewsList}}, function(error) {
+                    if (error) {
+                        console.log("There was an issue: ", error);
+                        res.json(error);
+                    } else {
+                        Movie.deleteOne({_id: mid}, function(error) {
+                            if (error) {
+                                console.log("There was an issue: ", error);
+                                res.json(error);
+                            } else {
+                                let response = {
+                                    message: "Success",
+                                };
+                                res.json(response);
+                            };
+                        });
+                    };
+                });
             };
         });
     }

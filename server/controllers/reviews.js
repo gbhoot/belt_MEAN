@@ -41,7 +41,6 @@ module.exports = {
                 res.json(error);
             } else {
                 let reviewsList = movie[0]['reviews'];
-                console.log(reviewsList);
                 Review.find({_id: {$in: reviewsList}}, function(error, reviews) {
                     if (error) {
                         console.log("There was an issue: ", error);
